@@ -94,8 +94,7 @@ namespace Library
 
             string input = Console.ReadLine();
 
-            int selectedOption = 0;
-            int.TryParse(input, out selectedOption);
+            int.TryParse(input, out int selectedOption);
             return selectedOption;
         }
 
