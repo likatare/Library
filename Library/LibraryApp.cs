@@ -606,19 +606,22 @@ namespace Library
                         }
                     }
                 }
+
                 if (numberOFBooksLoans < loanBook.Copies)
                 {
                     loanAccepted = true;
                 }
+
+                else
+                {
+                    throw new Exception("try another date");
+                }
+
                 if (startDateResultat < 0)
                 {
                     Console.WriteLine($"You have to book {DateTime.Now.ToShortDateString()} or later ");
                     loanAccepted = false;
 
-                }
-                else
-                {
-                    throw new Exception("try another date");
                 }
             }
             catch (System.Exception)
@@ -704,15 +707,17 @@ namespace Library
                             numberOFMovieLoans++;
 
                         }
+
+                        else
+                        {
+                            Console.WriteLine("Enter a date today or later.");
+                        }
+
                         if (startDateResultat < 0)
                         {
                             Console.WriteLine($"You have to book {DateTime.Now.ToShortDateString()} or later ");
                             loanAccepted = false;
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter a date today or later.");
                         }
                     }
                 }
