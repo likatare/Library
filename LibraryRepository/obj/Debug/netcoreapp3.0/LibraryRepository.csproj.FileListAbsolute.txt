@@ -1,0 +1,8 @@
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\bin\Debug\netcoreapp3.0\LibraryRepository.deps.json
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\bin\Debug\netcoreapp3.0\LibraryRepository.dll
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\bin\Debug\netcoreapp3.0\LibraryRepository.pdb
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.0\LibraryRepository.csprojAssemblyReference.cache
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.0\LibraryRepository.AssemblyInfoInputs.cache
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.0\LibraryRepository.AssemblyInfo.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.0\LibraryRepository.dll
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.0\LibraryRepository.pdb

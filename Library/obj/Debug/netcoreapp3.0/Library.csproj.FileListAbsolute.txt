@@ -16,3 +16,5 @@ C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\bin\Deb
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\bin\Debug\netcoreapp3.0\MongoDB.Libmongocrypt.dll
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\bin\Debug\netcoreapp3.0\SharpCompress.dll
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\obj\Debug\netcoreapp3.0\Library.csproj.CopyComplete
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\bin\Debug\netcoreapp3.0\LibraryRepository.dll
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\Library\bin\Debug\netcoreapp3.0\LibraryRepository.pdb

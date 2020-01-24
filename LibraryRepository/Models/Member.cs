@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository.Models
 {
-    class Member
+   public class Member
     {
         public ObjectId Id { get; set; }
         public string Name { get; set; }

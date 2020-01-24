@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository.Models
 {
-    class Loan
+    public class Loan
     {
 
 
@@ -21,7 +21,7 @@ namespace Library
         public DateTime EndDate { get; set; }
         public string Member { get; set; }
         public string Article { get; set; }
-       
+
 
 
 

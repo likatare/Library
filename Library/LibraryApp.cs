@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using LibraryRepository.Models;
+using LibraryRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -150,9 +151,7 @@ namespace Library
 
             Book book = new Book(title, language, yearOfPublication, copies, pages, author);
 
-            Database db = new Database();
-
-            db.SaveBook(book);
+            BookRepository.SaveBook(book);
         }
 
         /// <summary>
@@ -177,9 +176,7 @@ namespace Library
 
             Movie movie = new Movie(title, language, yearOfPublication, copies, genre, type);
 
-            Database db = new Database();
-
-            db.SaveMovie(movie);
+            MovieRepository.SaveMovie(movie);
         }
 
         /// <summary>
@@ -190,10 +187,9 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing items....");
 
-            Database db = new Database();
-
-            List<Book> books = db.GetBooks();
-            List<Movie> movies = db.GetMovies();
+            
+            List<Book> books = BookRepository.GetBooks();
+            List<Movie> movies = MovieRepository.GetMovies();
 
             Console.WriteLine("Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -242,8 +238,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Book> books = db.GetBooks();
+           
+            List<Book> books = BookRepository.GetBooks();
 
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
@@ -284,7 +280,7 @@ namespace Library
             bookToUpdate.Copies = copies;
 
 
-            db.UpdateBookById(bookToUpdate);
+            BookRepository.UpdateBookById(bookToUpdate);
         }
 
         /// <summary>
@@ -294,8 +290,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Movie> movies = db.GetMovies();
+
+            List<Movie> movies = MovieRepository.GetMovies();
 
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
@@ -333,7 +329,7 @@ namespace Library
             int.TryParse(input, out int copies);
             movieToUpdate.Copies = copies;
 
-            db.UpdateMovieById(movieToUpdate);
+            MovieRepository.UpdateMovieById(movieToUpdate);
         }
 
         /// <summary>
@@ -365,8 +361,7 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Book> books = db.GetBooks();
+            List<Book> books = BookRepository.GetBooks(); ;
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -382,7 +377,7 @@ namespace Library
             Book deleteBook = books[selectedNumber - 1];
 
 
-            db.DeleteBookById(deleteBook.Id);
+            BookRepository.DeleteBookById(deleteBook);
 
         }
 
@@ -393,8 +388,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Movie> movies = db.GetMovies();
+           
+            List<Movie> movies = MovieRepository.GetMovies();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Genre - Type - Copies");
 
@@ -410,7 +405,7 @@ namespace Library
             Movie deleteMovie = movies[selectedNumber - 1];
 
 
-            db.DeleteMovieById(deleteMovie.Id);
+            MovieRepository.DeleteMovieById(deleteMovie);
 
         }
 
@@ -432,8 +427,7 @@ namespace Library
 
             Member member = new Member(name, age, address);
 
-            Database db = new Database();
-            db.SaveMember(member);
+            MemberRepository.SaveMember(member);
         }
 
         /// <summary>
@@ -444,8 +438,8 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing Members....");
 
-            Database db = new Database();
-            List<Member> members = db.GetMembers();
+            
+            List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Name - Age - Address");
 
@@ -464,8 +458,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Member> members = db.GetMembers();
+
+            List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
 
@@ -480,17 +474,18 @@ namespace Library
             Member memberToUpdate = members[selectedNumber - 1];
 
             Console.Write("Enter a name: ");
-            string memberName = Console.ReadLine();
+            memberToUpdate.Name = Console.ReadLine();
 
             Console.Write("Enter a age: ");
             input = Console.ReadLine();
             int.TryParse(input, out int age);
+            memberToUpdate.Age = age;
 
             Console.Write("Enter your address: ");
-            string address = Console.ReadLine();
+            memberToUpdate.Address = Console.ReadLine();
 
 
-            db.UpdateMemberById(memberToUpdate.Id, memberName, age, address);
+            MemberRepository.UpdateMemberById(memberToUpdate);
         }
 
         /// <summary>
@@ -500,8 +495,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Member> members = db.GetMembers();
+            
+            List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
 
@@ -515,7 +510,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Member memberToUpdate = members[selectedNumber - 1];
 
-            db.DeleteMemberById(memberToUpdate.Id);
+            MemberRepository.DeleteMemberById(memberToUpdate);
 
         }
 
@@ -548,9 +543,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-
-            List<Member> members = db.GetMembers();
+         
+            List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
 
@@ -564,7 +558,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Member memberToLoan = members[selectedNumber - 1];
 
-            List<Book> books = db.GetBooks();
+            List<Book> books = BookRepository.GetBooks();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -587,7 +581,7 @@ namespace Library
             input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime endDate);
 
-            List<Loan> loans = db.GetLoans();
+            List<Loan> loans = LoanRepository.GetLoans();
 
             bool loanAccepted = false;
             int startDateResultat = DateTime.Compare(startDate, DateTime.Now.Date);
@@ -632,8 +626,8 @@ namespace Library
 
             if (loanAccepted == true)
             {
-                db.UpdateBookById(loanBook);
-                db.LoanBook(loanBook.Title, memberToLoan.Name, startDate, endDate);
+                BookRepository.UpdateBookById(loanBook);
+                LoanRepository.LoanBook(loanBook, memberToLoan, startDate, endDate);
             }
 
             Console.WriteLine("Press enter");
@@ -648,9 +642,7 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-
-            List<Member> members = db.GetMembers();
+            List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
 
@@ -664,7 +656,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Member memberToLoan = members[selectedNumber - 1];
 
-            List<Movie> movies = db.GetMovies();
+            List<Movie> movies = MovieRepository.GetMovies();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -686,7 +678,7 @@ namespace Library
             input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime endDate);
 
-            List<Loan> loans = db.GetLoans();
+            List<Loan> loans = LoanRepository.GetLoans();
 
             int startDateResultat = DateTime.Compare(startDate, DateTime.Now.Date);
             bool loanAccepted = false;
@@ -738,8 +730,8 @@ namespace Library
             }
             if (loanAccepted == true)
             {
-                db.UpdateMovieById(loanMovie);
-                db.LoanMovie(loanMovie.Title, memberToLoan.Name, startDate, endDate);
+                MovieRepository.UpdateMovieById(loanMovie);
+                LoanRepository.LoanMovie(loanMovie, memberToLoan, startDate, endDate);
             }
 
             Console.WriteLine("Press enter");
@@ -755,8 +747,8 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing Loans....");
 
-            Database db = new Database();
-            List<Loan> loans = db.GetLoans();
+            
+            List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
@@ -797,8 +789,8 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Loan> loans = db.GetLoans();
+            
+            List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Book - Starttime - Enddate");
 
@@ -812,7 +804,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan updateLoan = loans[selectedNumber - 1];
 
-            List<Book> books = db.GetBooks();
+            List<Book> books = BookRepository.GetBooks();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -835,7 +827,7 @@ namespace Library
             DateTime.TryParse(input, out DateTime endDate);
 
 
-            db.UpdateBookLoanById(loanBook.Title, updateLoan.Id, startDate, endDate);
+           LoanRepository.UpdateBookLoanById(loanBook, updateLoan, startDate, endDate);
 
 
         }
@@ -847,8 +839,7 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-            List<Loan> loans = db.GetLoans();
+            List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Book - Starttime - Enddate");
 
@@ -862,7 +853,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan updateLoan = loans[selectedNumber - 1];
 
-            List<Movie> movies = db.GetMovies();
+            List<Movie> movies = MovieRepository.GetMovies();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -885,7 +876,7 @@ namespace Library
             DateTime.TryParse(input, out DateTime endDate);
 
 
-            db.UpdateMovieLoanById(loanMovie.Title, updateLoan.Id, startDate, endDate);
+            LoanRepository.UpdateMovieLoanById(loanMovie, updateLoan, startDate, endDate);
 
         }
 
@@ -918,9 +909,7 @@ namespace Library
         {
             Console.Clear();
 
-            Database db = new Database();
-
-            List<Loan> loans = db.GetLoans();
+            List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
@@ -934,9 +923,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan deleteLoan = loans[selectedNumber - 1];
 
-
-
-            db.DeleteBookLoanById(deleteLoan.Id);
+            LoanRepository.DeleteBookLoanById(deleteLoan);
 
         }
 
@@ -946,9 +933,8 @@ namespace Library
         private void DeleteMovieLoan()
         {
             Console.Clear();
-            Database db = new Database();
 
-            List<Loan> loans = db.GetLoans();
+            List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
@@ -962,7 +948,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan deleteLoan = loans[selectedNumber - 1];
 
-            db.DeleteMovieLoanById(deleteLoan.Id);
+            LoanRepository.DeleteMovieLoanById(deleteLoan);
         }
 
     }

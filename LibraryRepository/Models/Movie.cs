@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository.Models
 {
-    class Movie : Item
+  public  class Movie : Item
     {
         
         public string Genre { get; set; }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository.Models
 {
-    class Book : Item
+  public  class Book : Item
     {
         public int Pages { get; set; }
         public string Author { get; set; }

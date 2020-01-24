@@ -1,14 +1,14 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using LibraryRepository.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository
 {
     class Database
     {
-        
 
         private const string BOOKS_COLLECTION = "books";
         private const string MEMBERS_COLLECTION = "members";
@@ -109,7 +109,7 @@ namespace Library
             var collection = _database.GetCollection<Movie>(Movies_COLLECTION);
 
             UpdateDefinition<Movie> update = Builders<Movie>.Update
-                .Set(m => m.Title,moviesIndex.Title)
+                .Set(m => m.Title, moviesIndex.Title)
                 .Set(m => m.Language, moviesIndex.Language)
                 .Set(m => m.YearOfPublication, moviesIndex.YearOfPublication)
                 .Set(m => m.Genre, moviesIndex.Genre)
@@ -167,15 +167,15 @@ namespace Library
         /// <param name="memberName">member name</param>
         /// <param name="age">member age</param>
         /// <param name="address">member address</param>
-        internal void UpdateMemberById(ObjectId id, string memberName, int age, string address)
+        internal void UpdateMemberById(Member member)
         {
             var collection = _database.GetCollection<Member>(MEMBERS_COLLECTION);
             UpdateDefinition<Member> update = Builders<Member>.Update
-                .Set(m => m.Name, memberName)
-                .Set(m => m.Age, age)
-                .Set(m => m.Address, address);
+                .Set(m => m.Name, member.Name)
+                .Set(m => m.Age, member.Age)
+                .Set(m => m.Address, member.Address);
 
-            collection.UpdateOne(m => m.Id == id, update);
+            collection.UpdateOne(m => m.Id == member.Id, update);
 
         }
 
@@ -209,7 +209,7 @@ namespace Library
 
             collection.InsertOne(loan);
 
-            
+
         }
 
         /// <summary>
@@ -296,3 +296,4 @@ namespace Library
         }
     }
 }
+

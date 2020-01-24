@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library
+namespace LibraryRepository.Models
 {
-    abstract class Item
+    public abstract class Item
     {
-        
+
         public ObjectId Id { get; set; }
         public string Title { get; set; }
         public string Language { get; set; }
@@ -15,7 +15,7 @@ namespace Library
         public int Copies { get; set; }
 
 
-        public Item(string title,string language,int yearOfPublication, int copies)
+        public Item(string title, string language, int yearOfPublication, int copies)
         {
             Title = title;
             Language = language;
@@ -25,6 +25,6 @@ namespace Library
 
     }
 
-    
+
 
 }
