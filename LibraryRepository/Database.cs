@@ -289,6 +289,10 @@ namespace LibraryRepository
             collection.DeleteOne(b => b.Id == id);
         }
 
+        /// <summary>
+        /// Delete  movieloan in the database
+        /// </summary>
+        /// <param name="id">id of object</param>
         internal void DeleteMovieLoanById(ObjectId id)
         {
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
