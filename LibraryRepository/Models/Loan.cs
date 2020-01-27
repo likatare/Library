@@ -20,11 +20,12 @@ namespace LibraryRepository.Models
 
         public DateTime EndDate { get; set; }
         public string Member { get; set; }
-        public string Article { get; set; }
 
+        public Book BookRented { get; set; }
 
+        public Movie MovieRented { get; set; }
 
-
+        public Member memberRenting;
 
     }
 }

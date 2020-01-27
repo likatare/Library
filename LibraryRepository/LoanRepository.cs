@@ -29,7 +29,7 @@ namespace LibraryRepository
         {
             Database db = new Database();
 
-            db.LoanBook(loanBook.Title, memberToLoan.Name, startDate, endDate);
+            db.LoanBook(loanBook, memberToLoan.Name, startDate, endDate);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace LibraryRepository
         {
             Database db = new Database();
 
-            db.LoanMovie(loanMovie.Title, memberToLoan.Name, startDate, endDate);
+            db.LoanMovie(loanMovie, memberToLoan.Name, startDate, endDate);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace LibraryRepository
         public static void UpdateBookLoanById(Book loanBook, Loan updateLoan, DateTime startDate, DateTime endDate)
         {
             Database db = new Database();
-            db.UpdateBookLoanById(loanBook.Title, updateLoan.Id, startDate, endDate);
+            db.UpdateBookLoanById(loanBook, updateLoan.Id, startDate, endDate);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace LibraryRepository
         public static void UpdateMovieLoanById(Movie loanMovie, Loan updateLoan, DateTime startDate, DateTime endDate)
         {
             Database db = new Database();
-            db.UpdateMovieLoanById(loanMovie.Title, updateLoan.Id, startDate, endDate);
+            db.UpdateMovieLoanById(loanMovie, updateLoan.Id, startDate, endDate);
         }
 
         /// <summary>

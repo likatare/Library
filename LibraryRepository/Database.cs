@@ -196,16 +196,16 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanBook(string bookId, string memberId, DateTime startDate, DateTime endDate)
+        internal void LoanBook(Book rentedBook, string memberId, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
 
             loan.Member = memberId;
-            loan.Article = bookId;
+            loan.BookRented = rentedBook;
             loan.StartDate = startDate;
             loan.EndDate = endDate;
-
+            loan.MovieRented = null;
 
             collection.InsertOne(loan);
 
@@ -219,15 +219,16 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanMovie(string movieId, string memberId, DateTime startDate, DateTime endDate)
+        internal void LoanMovie(Movie rentedBook, string memberId, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
 
             loan.Member = memberId;
-            loan.Article = movieId;
+            loan.MovieRented = rentedBook;
             loan.StartDate = startDate;
             loan.EndDate = endDate;
+            loan.BookRented = null;
 
             collection.InsertOne(loan);
         }
@@ -246,17 +247,18 @@ namespace LibraryRepository
         /// <summary>
         /// Update BookLoan to the database.
         /// </summary>
-        /// <param name="title">Title of the book</param>
+        /// <param name="articleId">Id of the book</param>
         /// <param name="id">Id of loan</param>
         /// <param name="startDate">When Bookloan starts</param>
         /// <param name="endDate">When Bookloan ends</param>
-        internal void UpdateBookLoanById(string title, ObjectId id, DateTime startDate, DateTime endDate)
+        internal void UpdateBookLoanById(Book rentedBook , ObjectId id, DateTime startDate, DateTime endDate)
         {
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
             UpdateDefinition<Loan> update = Builders<Loan>.Update
-                .Set(b => b.Article, title)
+                .Set(b => b.BookRented, rentedBook)
                 .Set(b => b.StartDate, startDate)
-                .Set(b => b.EndDate, endDate);
+                .Set(b => b.EndDate, endDate)
+                .Set(b => b.MovieRented, null);
 
             collection.UpdateOne(b => b.Id == id, update);
         }
@@ -268,13 +270,14 @@ namespace LibraryRepository
         /// <param name="id">Id of the loan</param>
         /// <param name="startDate">When Movieloan starts</param>
         /// <param name="endDate">When Movieloan ends</param>
-        internal void UpdateMovieLoanById(string title, ObjectId id, DateTime startDate, DateTime endDate)
+        internal void UpdateMovieLoanById(Movie rentedMovie, ObjectId id, DateTime startDate, DateTime endDate)
         {
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
             UpdateDefinition<Loan> update = Builders<Loan>.Update
-                .Set(m => m.Article, title)
+                .Set(m => m.MovieRented, rentedMovie)
                 .Set(m => m.StartDate, startDate)
-                .Set(m => m.EndDate, endDate);
+                .Set(m => m.EndDate, endDate)
+                .Set(m => m.BookRented, null);
 
             collection.UpdateOne(m => m.Id == id, update);
         }

@@ -187,7 +187,7 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing items....");
 
-            
+
             List<Book> books = BookRepository.GetBooks();
             List<Movie> movies = MovieRepository.GetMovies();
 
@@ -238,7 +238,7 @@ namespace Library
         {
             Console.Clear();
 
-           
+
             List<Book> books = BookRepository.GetBooks();
 
 
@@ -388,7 +388,7 @@ namespace Library
         {
             Console.Clear();
 
-           
+
             List<Movie> movies = MovieRepository.GetMovies();
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Genre - Type - Copies");
@@ -438,7 +438,7 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing Members....");
 
-            
+
             List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Name - Age - Address");
@@ -495,7 +495,7 @@ namespace Library
         {
             Console.Clear();
 
-            
+
             List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
@@ -543,7 +543,6 @@ namespace Library
         {
             Console.Clear();
 
-         
             List<Member> members = MemberRepository.GetMembers();
 
             Console.WriteLine("Id  Name - Age - Address");
@@ -591,12 +590,15 @@ namespace Library
             {
                 for (int i = 0; i < loans.Count; i++)
                 {
-                    if (loans[i].Article == loanBook.Title)
+                    if (loans[i].BookRented != null)
                     {
-                        //The following is not met: the new loan start date is later than the current loan end date OR the new loan end date is earlier than the current loan start date.
-                        if (!(startDate > loans[i].EndDate || endDate < loans[i].StartDate))
+                        if (loans[i].BookRented.Id == loanBook.Id)
                         {
-                            numberOFBooksLoans++;
+                            //The following is not met: the new loan start date is later than the current loan end date OR the new loan end date is earlier than the current loan start date.
+                            if (!(startDate > loans[i].EndDate || endDate < loans[i].StartDate))
+                            {
+                                numberOFBooksLoans++;
+                            }
                         }
                     }
                 }
@@ -684,35 +686,25 @@ namespace Library
             bool loanAccepted = false;
             int numberOFMovieLoans = 0;
 
-
             try
             {
                 for (int i = 0; i < loans.Count; i++)
                 {
-                    if (loans[i].Article == loanMovie.Title)
+                    if (loans[i].MovieRented != null)
                     {
-                        //The following is not met: the new loan start date is later than the current loan end date OR the new loan end date is earlier than the current loan start date.
-
-
-                        if (!(startDate > loans[i].EndDate || endDate < loans[i].StartDate))
+                        if (loans[i].MovieRented.Id == loanMovie.Id)
                         {
-                            numberOFMovieLoans++;
+                            //The following is not met: the new loan start date is later than the current loan end date OR the new loan end date is earlier than the current loan start date.
 
-                        }
+                            if (!(startDate > loans[i].EndDate || endDate < loans[i].StartDate))
+                            {
+                                numberOFMovieLoans++;
 
-                        else
-                        {
-                            Console.WriteLine("Enter a date today or later.");
-                        }
-
-                        if (startDateResultat < 0)
-                        {
-                            Console.WriteLine($"You have to book {DateTime.Now.ToShortDateString()} or later ");
-                            loanAccepted = false;
-
+                            }
                         }
                     }
                 }
+               
                 if (numberOFMovieLoans < loanMovie.Copies)
                 {
                     loanAccepted = true;
@@ -722,6 +714,14 @@ namespace Library
                 {
                     throw new Exception("try another date");
                 }
+
+                if (startDateResultat < 0)
+                {
+                    Console.WriteLine($"You have to book {DateTime.Now.ToShortDateString()} or later ");
+                    loanAccepted = false;
+
+                }
+
             }
             catch (System.Exception)
             {
@@ -747,14 +747,23 @@ namespace Library
             Console.Clear();
             Console.WriteLine("Showing Loans....");
 
-            
+
             List<Loan> loans = LoanRepository.GetLoans();
 
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
-            foreach (Loan loan in loans)
+            for (int i = 0; i < loans.Count; i++)
             {
-                Console.WriteLine($"Loan: {loan.Member} {loan.Article} {loan.StartDate.ToShortDateString()} {loan.EndDate.ToShortDateString()}");
+
+                if (loans[i].MovieRented != null)
+                {
+                    Console.WriteLine($"Loan: {loans[i].Member} {loans[i].MovieRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                }
+                else
+                {
+                    Console.WriteLine($"Loan: {loans[i].Member} {loans[i].BookRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+
+                }
             }
             Console.WriteLine("press enter to continue");
             Console.ReadLine();
@@ -789,14 +798,23 @@ namespace Library
         {
             Console.Clear();
 
-            
-            List<Loan> loans = LoanRepository.GetLoans();
 
+            List<Loan> loans = LoanRepository.GetLoans();
+            List<Book> books = BookRepository.GetBooks();
             Console.WriteLine("Name - Book - Starttime - Enddate");
 
+            string bookTitle = "";
             for (int i = 0; i < loans.Count; i++)
             {
-                Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {loans[i].Article} {loans[i].StartDate} {loans[i].EndDate}");
+                if (loans[i].BookRented != null)
+                {
+                    bookTitle = loans[i].BookRented.Title;
+
+
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                }
+
+
             }
 
             Console.WriteLine("Choose loan id to update: ");
@@ -804,7 +822,7 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan updateLoan = loans[selectedNumber - 1];
 
-            List<Book> books = BookRepository.GetBooks();
+
 
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
@@ -827,7 +845,7 @@ namespace Library
             DateTime.TryParse(input, out DateTime endDate);
 
 
-           LoanRepository.UpdateBookLoanById(loanBook, updateLoan, startDate, endDate);
+            LoanRepository.UpdateBookLoanById(loanBook, updateLoan, startDate, endDate);
 
 
         }
@@ -840,12 +858,21 @@ namespace Library
             Console.Clear();
 
             List<Loan> loans = LoanRepository.GetLoans();
+            List<Movie> movies = MovieRepository.GetMovies();
 
-            Console.WriteLine("Name - Book - Starttime - Enddate");
+            Console.WriteLine("Name - Movie - Starttime - Enddate");
 
+
+            string movieTitle = "";
             for (int i = 0; i < loans.Count; i++)
             {
-                Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {loans[i].Article} {loans[i].StartDate} {loans[i].EndDate}");
+                if (loans[i].MovieRented != null)
+                {
+                    movieTitle = loans[i].MovieRented.Title;
+
+                    //members
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                }
             }
 
             Console.WriteLine("Choose loan id to update: ");
@@ -853,13 +880,11 @@ namespace Library
             int selectedNumber = int.Parse(input);
             Loan updateLoan = loans[selectedNumber - 1];
 
-            List<Movie> movies = MovieRepository.GetMovies();
-
             Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
 
-            for (int i = 0; i < movies.Count; i++)
+            for (int x = 0; x < movies.Count; x++)
             {
-                Console.WriteLine($"{i + 1}: Movie: {movies[i].Title} {movies[i].Language} {movies[i].YearOfPublication} {movies[i].Genre} {movies[i].Type} {movies[i].Copies}");
+                Console.WriteLine($"{x + 1}: Movie: {movies[x].Title} {movies[x].Language} {movies[x].YearOfPublication} {movies[x].Genre} {movies[x].Type} {movies[x].Copies}");
             }
 
             Console.Write("Choose movie id to loan: ");
@@ -877,6 +902,7 @@ namespace Library
 
 
             LoanRepository.UpdateMovieLoanById(loanMovie, updateLoan, startDate, endDate);
+
 
         }
 
@@ -911,11 +937,21 @@ namespace Library
 
             List<Loan> loans = LoanRepository.GetLoans();
 
+
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
+            string bookTitle = "";
             for (int i = 0; i < loans.Count; i++)
             {
-                Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {loans[i].Article} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                if (loans[i].BookRented != null)
+                {
+                    bookTitle = loans[i].BookRented.Title;
+
+
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                }
+
+
             }
 
             Console.WriteLine("Choose loan id to delete: ");
@@ -936,11 +972,19 @@ namespace Library
 
             List<Loan> loans = LoanRepository.GetLoans();
 
+
             Console.WriteLine("Name - Article - Starttime - Enddate");
 
+            string movieTitle = "";
             for (int i = 0; i < loans.Count; i++)
             {
-                Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {loans[i].Article} {loans[i].StartDate} {loans[i].EndDate}");
+                if (loans[i].MovieRented != null)
+                {
+                    movieTitle = loans[i].MovieRented.Title;
+
+                    //members
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                }
             }
 
             Console.WriteLine("Choose loan id to delete: ");
