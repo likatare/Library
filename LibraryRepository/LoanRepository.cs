@@ -29,7 +29,7 @@ namespace LibraryRepository
         {
             Database db = new Database();
 
-            db.LoanBook(loanBook, memberToLoan.Name, startDate, endDate);
+            db.LoanBook(loanBook, memberToLoan, startDate, endDate);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace LibraryRepository
         {
             Database db = new Database();
 
-            db.LoanMovie(loanMovie, memberToLoan.Name, startDate, endDate);
+            db.LoanMovie(loanMovie, memberToLoan, startDate, endDate);
         }
 
         /// <summary>

@@ -757,11 +757,11 @@ namespace Library
 
                 if (loans[i].MovieRented != null)
                 {
-                    Console.WriteLine($"Loan: {loans[i].Member} {loans[i].MovieRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"Loan: {loans[i].MemberRenting.Name} {loans[i].MovieRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
                 }
                 else
                 {
-                    Console.WriteLine($"Loan: {loans[i].Member} {loans[i].BookRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"Loan: {loans[i].MemberRenting.Name} {loans[i].BookRented.Title} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
 
                 }
             }
@@ -811,7 +811,7 @@ namespace Library
                     bookTitle = loans[i].BookRented.Title;
 
 
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
                 }
 
 
@@ -871,7 +871,7 @@ namespace Library
                     movieTitle = loans[i].MovieRented.Title;
 
                     //members
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
                 }
             }
 
@@ -948,7 +948,7 @@ namespace Library
                     bookTitle = loans[i].BookRented.Title;
 
 
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
                 }
 
 
@@ -983,7 +983,7 @@ namespace Library
                     movieTitle = loans[i].MovieRented.Title;
 
                     //members
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].Member} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
+                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
                 }
             }
 

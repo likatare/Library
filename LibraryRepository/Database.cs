@@ -196,12 +196,12 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanBook(Book rentedBook, string memberId, DateTime startDate, DateTime endDate)
+        internal void LoanBook(Book rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
 
-            loan.Member = memberId;
+            loan.MemberRenting = memberRenting;
             loan.BookRented = rentedBook;
             loan.StartDate = startDate;
             loan.EndDate = endDate;
@@ -219,12 +219,12 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanMovie(Movie rentedBook, string memberId, DateTime startDate, DateTime endDate)
+        internal void LoanMovie(Movie rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
 
-            loan.Member = memberId;
+            loan.MemberRenting = memberRenting;
             loan.MovieRented = rentedBook;
             loan.StartDate = startDate;
             loan.EndDate = endDate;
