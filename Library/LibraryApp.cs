@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Library
 {
-    class LibraryApp
+    public class LibraryApp
     {
         /// <summary>
         /// Starts the showmenu
@@ -74,7 +74,7 @@ namespace Library
         /// shows the menu and lets the user pick a option.
         /// </summary>
         /// <returns>The selected option of the user</returns>
-        private int ShowMenu()
+        private static int ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("Välj ett alternativ");
@@ -174,10 +174,14 @@ namespace Library
             string input = Console.ReadLine();
             int.TryParse(input, out int copies);
 
+
             Movie movie = new Movie(title, language, yearOfPublication, copies, genre, type);
 
             MovieRepository.SaveMovie(movie);
         }
+
+
+
 
         /// <summary>
         /// Prints a list of all items
@@ -234,11 +238,21 @@ namespace Library
         /// <summary>
         /// Lets the user update a book
         /// </summary>
-        private void UpdateBook()
+        public void UpdateBook()
         {
             Console.Clear();
 
+            List<Book> books = ListOfBooks();
 
+            InPutUpdateBook(books);
+        }
+
+        /// <summary>
+        /// list of books
+        /// </summary>
+        /// <returns>A list of books+</returns>
+        private static List<Book> ListOfBooks()
+        {
             List<Book> books = BookRepository.GetBooks();
 
 
@@ -250,6 +264,15 @@ namespace Library
                 Console.WriteLine($"{i + 1}: Book: {books[i].Title} {books[i].Language} {books[i].YearOfPublication} {books[i].Pages} {books[i].Author} {books[i].Copies}");
             }
 
+            return books;
+        }
+
+        /// <summary>
+        /// Lets the user updade bookinput
+        /// </summary>
+        /// <param name="books">list of books</param>
+        private static void InPutUpdateBook(List<Book> books)
+        {
             Console.Write("Select member to update: ");
             string input = Console.ReadLine();
             int selectedNumber = int.Parse(input);
@@ -290,6 +313,8 @@ namespace Library
         {
             Console.Clear();
 
+            bool inputValidation = true;
+
 
             List<Movie> movies = MovieRepository.GetMovies();
 
@@ -298,7 +323,7 @@ namespace Library
 
             for (int i = 0; i < movies.Count; i++)
             {
-                Console.WriteLine($"{i + 1}: Book: {movies[i].Title} {movies[i].Language} {movies[i].YearOfPublication} {movies[i].Genre} {movies[i].Type} {movies[i].Copies}");
+                Console.WriteLine($"{i + 1}: Movie: {movies[i].Title} {movies[i].Language} {movies[i].YearOfPublication} {movies[i].Genre} {movies[i].Type} {movies[i].Copies}");
             }
 
             Console.Write("Select movie to update: ");
@@ -312,13 +337,49 @@ namespace Library
             Console.Write("Enter a language: ");
             movieToUpdate.Language = Console.ReadLine();
 
-            Console.Write("Enter year of publication: ");
-            input = Console.ReadLine();
+
+
+            while (inputValidation)
+            {
+
+                Console.Write("Enter year of publication: ");
+                input = Console.ReadLine();
+
+                if (IsDigitsOnly(input))
+                {
+                    int.TryParse(input, out int yearOfPublications);
+                    inputValidation = false;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong input");
+                    inputValidation = true;
+                }
+            }
+
             int.TryParse(input, out int yearOfPublication);
             movieToUpdate.YearOfPublication = yearOfPublication;
 
-            Console.Write("Enter genre: ");
-            movieToUpdate.Genre = Console.ReadLine();
+
+
+            while (!inputValidation)
+            {
+                Console.Write("Enter genre: ");
+                movieToUpdate.Genre = Console.ReadLine();
+
+                if (ValidateString(movieToUpdate.Genre))
+                {
+                    inputValidation = true;
+                }
+
+                else
+                {
+                    Console.WriteLine("Wrong input");
+                    inputValidation = false;
+
+                }
+            }
+
 
             Console.Write("Enter type: ");
             movieToUpdate.Type = Console.ReadLine();
@@ -331,6 +392,46 @@ namespace Library
 
             MovieRepository.UpdateMovieById(movieToUpdate);
         }
+
+        /// <summary>
+        /// Validates if its a number.
+        /// </summary>
+        /// <param name="str">string to validate</param>
+        /// <returns>A bool that is true or false</returns>
+        public bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Validates inputs length and if it contains anythinge else then letters
+        /// </summary>
+        /// <param name="str">string to validate</param>
+        /// <returns>A bool that is true or false</returns>
+        public bool ValidateString(string str)
+        {
+            bool output = true;
+            char[] invalidCharacters = "~!@#¤%^&()_+=0123456789<>,.?/\\|{}[]'\"".ToCharArray();
+
+            if (str.Length < 2)
+            {
+                output = false;
+            }
+
+            if (str.IndexOfAny(invalidCharacters) >= 0)
+            {
+                output = false;
+            }
+            return output;
+        }
+
+
 
         /// <summary>
         /// Lets the user Choose to delete a book or movie. 
@@ -458,6 +559,29 @@ namespace Library
         {
             Console.Clear();
 
+            Member memberToUpdate = SelectMember();
+
+            Console.Write("Enter a name: ");
+            memberToUpdate.Name = Console.ReadLine();
+
+            Console.Write("Enter a age: ");
+            string input = Console.ReadLine();
+            int.TryParse(input, out int age);
+            memberToUpdate.Age = age;
+
+            Console.Write("Enter your address: ");
+            memberToUpdate.Address = Console.ReadLine();
+
+
+            MemberRepository.UpdateMemberById(memberToUpdate);
+        }
+
+        /// <summary>
+        /// Select Member to loan.
+        /// </summary>
+        /// <returns>selected member id</returns>
+        private static Member SelectMember()
+        {
 
             List<Member> members = MemberRepository.GetMembers();
 
@@ -471,21 +595,8 @@ namespace Library
             Console.Write("Select member to update: ");
             string input = Console.ReadLine();
             int selectedNumber = int.Parse(input);
-            Member memberToUpdate = members[selectedNumber - 1];
+            return members[selectedNumber - 1];
 
-            Console.Write("Enter a name: ");
-            memberToUpdate.Name = Console.ReadLine();
-
-            Console.Write("Enter a age: ");
-            input = Console.ReadLine();
-            int.TryParse(input, out int age);
-            memberToUpdate.Age = age;
-
-            Console.Write("Enter your address: ");
-            memberToUpdate.Address = Console.ReadLine();
-
-
-            MemberRepository.UpdateMemberById(memberToUpdate);
         }
 
         /// <summary>
@@ -495,22 +606,9 @@ namespace Library
         {
             Console.Clear();
 
+            Member memberToDelete = SelectMember();
 
-            List<Member> members = MemberRepository.GetMembers();
-
-            Console.WriteLine("Id  Name - Age - Address");
-
-            for (int i = 0; i < members.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}: {members[i].Name} {members[i].Age} {members[i].Address}");
-            }
-
-            Console.Write("Choose member id to delete: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Member memberToUpdate = members[selectedNumber - 1];
-
-            MemberRepository.DeleteMemberById(memberToUpdate);
+            MemberRepository.DeleteMemberById(memberToDelete);
 
         }
 
@@ -543,36 +641,11 @@ namespace Library
         {
             Console.Clear();
 
-            List<Member> members = MemberRepository.GetMembers();
-
-            Console.WriteLine("Id  Name - Age - Address");
-
-            for (int x = 0; x < members.Count; x++)
-            {
-                Console.WriteLine($"{x + 1}: {members[x].Name} {members[x].Age} {members[x].Address}");
-            }
-
-            Console.Write("Choose member id to loan a book: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Member memberToLoan = members[selectedNumber - 1];
-
-            List<Book> books = BookRepository.GetBooks();
-
-            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
-
-            for (int j = 0; j < books.Count; j++)
-            {
-                Console.WriteLine($"{j + 1}: Book: {books[j].Title} {books[j].Language} {books[j].YearOfPublication} {books[j].Pages} {books[j].Author} {books[j].Copies}");
-            }
-
-            Console.Write("Choose book id to loan: ");
-            input = Console.ReadLine();
-            selectedNumber = int.Parse(input);
-            Book loanBook = books[selectedNumber - 1];
+            Member memberToLoan = SelectMember();
+            Book loanBook = SelectBook();
 
             Console.Write("Enter a day you want to loan your book: ");
-            input = Console.ReadLine();
+            string input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime startDate);
 
 
@@ -637,6 +710,42 @@ namespace Library
 
         }
 
+
+        /// <summary>
+        /// select bookId to loan
+        /// </summary>
+        /// <returns>selected book id</returns>
+        private Book SelectBook()
+        {
+
+            List<Book> books = BookRepository.GetBooks();
+
+            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
+
+            for (int j = 0; j < books.Count; j++)
+            {
+                Console.WriteLine($"{j + 1}: Book: {books[j].Title} {books[j].Language} {books[j].YearOfPublication} {books[j].Pages} {books[j].Author} {books[j].Copies}");
+            }
+
+            Console.Write("Choose book id to loan: ");
+            string input = Console.ReadLine();
+            int selectedNumber = int.Parse(input);
+            return books[selectedNumber - 1];
+        }
+
+
+        public bool IsDateInRightFormat(string date)
+        {
+            if (DateTime.TryParse(date, out DateTime startDate))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Lets the user loan a movie
         /// </summary>
@@ -644,40 +753,54 @@ namespace Library
         {
             Console.Clear();
 
-            List<Member> members = MemberRepository.GetMembers();
+            Member memberToLoan = SelectMember();
+            Movie loanMovie = SelectMovie();
 
-            Console.WriteLine("Id  Name - Age - Address");
+            string input = "";
+            bool test = true;
 
-            for (int i = 0; i < members.Count; i++)
+            while (test)
             {
-                Console.WriteLine($"{i + 1}: {members[i].Name} {members[i].Age} {members[i].Address}");
+
+                Console.Write("Enter a day you want to loan your movie: ");
+                input = Console.ReadLine();
+
+
+                if (IsDateInRightFormat(input))
+                {
+                    DateTime.TryParse(input, out DateTime startdate);
+                    test = false;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong Date Format");
+                    test = true;
+                }
+
             }
 
-            Console.Write("Choose member id to loan a movie: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Member memberToLoan = members[selectedNumber - 1];
-
-            List<Movie> movies = MovieRepository.GetMovies();
-
-            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
-
-            for (int i = 0; i < movies.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}: Movie: {movies[i].Title} {movies[i].Language} {movies[i].YearOfPublication} {movies[i].Genre} {movies[i].Type} {movies[i].Copies}");
-            }
-
-            Console.Write("Choose movie id to loan: ");
-            input = Console.ReadLine();
-            selectedNumber = int.Parse(input);
-            Movie loanMovie = movies[selectedNumber - 1];
-
-            Console.Write("Enter a day you want to loan your movie: ");
-            input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime startDate);
 
-            Console.Write("Enter when you want to return your movie: ");
-            input = Console.ReadLine();
+            while (!test)
+            {
+
+                Console.Write("Enter when you want to return your movie: ");
+                input = Console.ReadLine();
+
+
+                if (IsDateInRightFormat(input))
+                {
+                    DateTime.TryParse(input, out DateTime endingDate);
+                    test = true;
+
+                }
+                else
+                {
+                    Console.WriteLine("Wrong Date Format");
+                    test = false;
+                }
+            }
+
             DateTime.TryParse(input, out DateTime endDate);
 
             List<Loan> loans = LoanRepository.GetLoans();
@@ -704,7 +827,7 @@ namespace Library
                         }
                     }
                 }
-               
+
                 if (numberOFMovieLoans < loanMovie.Copies)
                 {
                     loanAccepted = true;
@@ -736,6 +859,84 @@ namespace Library
 
             Console.WriteLine("Press enter");
             Console.ReadLine();
+
+        }
+
+
+
+
+        private Movie SelectMovie()
+        {
+
+            List<Movie> movies = MovieRepository.GetMovies();
+
+            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
+
+            for (int i = 0; i < movies.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}: Movie: {movies[i].Title} {movies[i].Language} {movies[i].YearOfPublication} {movies[i].Genre} {movies[i].Type} {movies[i].Copies}");
+            }
+
+            Console.Write("Choose movie id to loan: ");
+            string input = Console.ReadLine();
+            int selectedNumber = int.Parse(input);
+            return movies[selectedNumber - 1];
+
+        }
+
+        private Loan SelectBookLoan()
+        {
+
+            List<Loan> bookLoans = LoanRepository.GetLoans();
+
+
+            Console.WriteLine("Name - Movie - Starttime - Enddate");
+
+
+            string bookTitle = "";
+            for (int i = 0; i < bookLoans.Count; i++)
+            {
+                if (bookLoans[i].BookRented != null)
+                {
+                    bookTitle = bookLoans[i].BookRented.Title;
+
+                    //members
+                    Console.WriteLine($"{i + 1}: Loan: {bookLoans[i].MemberRenting.Name} {bookTitle} {bookLoans[i].StartDate.ToShortDateString()} {bookLoans[i].EndDate.ToShortDateString()}");
+                }
+            }
+
+            Console.WriteLine("Choose loan id to update: ");
+            string input = Console.ReadLine();
+            int selectedNumber = int.Parse(input);
+            return bookLoans[selectedNumber - 1];
+
+        }
+
+        private Loan SelectMovieLoan()
+        {
+
+            List<Loan> movieLoans = LoanRepository.GetLoans();
+
+
+            Console.WriteLine("Name - Movie - Starttime - Enddate");
+
+
+            string movieTitle = "";
+            for (int i = 0; i < movieLoans.Count; i++)
+            {
+                if (movieLoans[i].MovieRented != null)
+                {
+                    movieTitle = movieLoans[i].MovieRented.Title;
+
+                    //members
+                    Console.WriteLine($"{i + 1}: Loan: {movieLoans[i].MemberRenting.Name} {movieTitle} {movieLoans[i].StartDate.ToShortDateString()} {movieLoans[i].EndDate.ToShortDateString()}");
+                }
+            }
+
+            Console.WriteLine("Choose loan id to update: ");
+            string input = Console.ReadLine();
+            int selectedNumber = int.Parse(input);
+            return movieLoans[selectedNumber - 1];
 
         }
 
@@ -798,56 +999,20 @@ namespace Library
         {
             Console.Clear();
 
+            Console.WriteLine("Updating bookloan....");
 
-            List<Loan> loans = LoanRepository.GetLoans();
-            List<Book> books = BookRepository.GetBooks();
-            Console.WriteLine("Name - Book - Starttime - Enddate");
-
-            string bookTitle = "";
-            for (int i = 0; i < loans.Count; i++)
-            {
-                if (loans[i].BookRented != null)
-                {
-                    bookTitle = loans[i].BookRented.Title;
-
-
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
-                }
-
-
-            }
-
-            Console.WriteLine("Choose loan id to update: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Loan updateLoan = loans[selectedNumber - 1];
-
-
-
-            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
-
-            for (int i = 0; i < books.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}: Book: {books[i].Title} {books[i].Language} {books[i].YearOfPublication} {books[i].Pages} {books[i].Author} {books[i].Copies}");
-            }
-
-            Console.Write("Choose book id to loan: ");
-            input = Console.ReadLine();
-            selectedNumber = int.Parse(input);
-            Book loanBook = books[selectedNumber - 1];
+            Loan updateBookLoan = SelectBookLoan();
+            Book loanBook = SelectBook();
 
             Console.Write("Enter a day you want to loan: ");
-            input = Console.ReadLine();
+            string input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime startDate);
 
             Console.Write("Enter when you want to return your book: ");
             input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime endDate);
 
-
-            LoanRepository.UpdateBookLoanById(loanBook, updateLoan, startDate, endDate);
-
-
+            LoanRepository.UpdateBookLoanById(loanBook, updateBookLoan, startDate, endDate);
         }
 
         /// <summary>
@@ -857,53 +1022,18 @@ namespace Library
         {
             Console.Clear();
 
-            List<Loan> loans = LoanRepository.GetLoans();
-            List<Movie> movies = MovieRepository.GetMovies();
-
-            Console.WriteLine("Name - Movie - Starttime - Enddate");
-
-
-            string movieTitle = "";
-            for (int i = 0; i < loans.Count; i++)
-            {
-                if (loans[i].MovieRented != null)
-                {
-                    movieTitle = loans[i].MovieRented.Title;
-
-                    //members
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
-                }
-            }
-
-            Console.WriteLine("Choose loan id to update: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Loan updateLoan = loans[selectedNumber - 1];
-
-            Console.WriteLine("Id  Title - Language - Year Of Publication - Pages - Author - Copies");
-
-            for (int x = 0; x < movies.Count; x++)
-            {
-                Console.WriteLine($"{x + 1}: Movie: {movies[x].Title} {movies[x].Language} {movies[x].YearOfPublication} {movies[x].Genre} {movies[x].Type} {movies[x].Copies}");
-            }
-
-            Console.Write("Choose movie id to loan: ");
-            input = Console.ReadLine();
-            selectedNumber = int.Parse(input);
-            Movie loanMovie = movies[selectedNumber - 1];
+            Loan updateMovieLoan = SelectMovieLoan();
+            Movie loanMovie = SelectMovie();
 
             Console.Write("Enter a day you want to loan your movie: ");
-            input = Console.ReadLine();
+            string input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime startDate);
 
             Console.Write("Enter when you want to return your movie: ");
             input = Console.ReadLine();
             DateTime.TryParse(input, out DateTime endDate);
 
-
-            LoanRepository.UpdateMovieLoanById(loanMovie, updateLoan, startDate, endDate);
-
-
+            LoanRepository.UpdateMovieLoanById(loanMovie, updateMovieLoan, startDate, endDate);
         }
 
         /// <summary>
@@ -935,31 +1065,9 @@ namespace Library
         {
             Console.Clear();
 
-            List<Loan> loans = LoanRepository.GetLoans();
+            Loan deleteBookLoan = SelectBookLoan();
 
-
-            Console.WriteLine("Name - Article - Starttime - Enddate");
-
-            string bookTitle = "";
-            for (int i = 0; i < loans.Count; i++)
-            {
-                if (loans[i].BookRented != null)
-                {
-                    bookTitle = loans[i].BookRented.Title;
-
-
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {bookTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
-                }
-
-
-            }
-
-            Console.WriteLine("Choose loan id to delete: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Loan deleteLoan = loans[selectedNumber - 1];
-
-            LoanRepository.DeleteBookLoanById(deleteLoan);
+            LoanRepository.DeleteBookLoanById(deleteBookLoan);
 
         }
 
@@ -970,29 +1078,9 @@ namespace Library
         {
             Console.Clear();
 
-            List<Loan> loans = LoanRepository.GetLoans();
+            Loan deleteMovieLoan = SelectMovieLoan();
 
-
-            Console.WriteLine("Name - Article - Starttime - Enddate");
-
-            string movieTitle = "";
-            for (int i = 0; i < loans.Count; i++)
-            {
-                if (loans[i].MovieRented != null)
-                {
-                    movieTitle = loans[i].MovieRented.Title;
-
-                    //members
-                    Console.WriteLine($"{i + 1}: Loan: {loans[i].MemberRenting.Name} {movieTitle} {loans[i].StartDate.ToShortDateString()} {loans[i].EndDate.ToShortDateString()}");
-                }
-            }
-
-            Console.WriteLine("Choose loan id to delete: ");
-            string input = Console.ReadLine();
-            int selectedNumber = int.Parse(input);
-            Loan deleteLoan = loans[selectedNumber - 1];
-
-            LoanRepository.DeleteMovieLoanById(deleteLoan);
+            LoanRepository.DeleteMovieLoanById(deleteMovieLoan);
         }
 
     }

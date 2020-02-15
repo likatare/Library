@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LibraryRepository
 {
-    class Database
+    public class Database
     {
 
         private const string BOOKS_COLLECTION = "books";
@@ -251,7 +251,7 @@ namespace LibraryRepository
         /// <param name="id">Id of loan</param>
         /// <param name="startDate">When Bookloan starts</param>
         /// <param name="endDate">When Bookloan ends</param>
-        internal void UpdateBookLoanById(Book rentedBook , ObjectId id, DateTime startDate, DateTime endDate)
+        internal void UpdateBookLoanById(Book rentedBook, ObjectId id, DateTime startDate, DateTime endDate)
         {
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
             UpdateDefinition<Loan> update = Builders<Loan>.Update

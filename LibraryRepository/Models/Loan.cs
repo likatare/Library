@@ -19,7 +19,7 @@ namespace LibraryRepository.Models
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
 
         public DateTime EndDate { get; set; }
-      //  public string Member { get; set; }
+      
 
         public Book BookRented { get; set; }
 
