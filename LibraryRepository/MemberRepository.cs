@@ -1,4 +1,5 @@
 ﻿using LibraryRepository.Models;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,26 +29,32 @@ namespace LibraryRepository
             return db.GetMembers();
         }
 
+        public static Member GetMemberById(ObjectId memberId)
+        {
+            Database db = new Database();
+            return db.GetMemberById(memberId);
+        }
+
         /// <summary>
         /// Updates a member in the database
         /// </summary>
         /// <param name="member">Member of member</param>
-        public static void UpdateMemberById(Member member)
+        public static void UpdateMemberById(ObjectId id,Member member)
         {
             Database db = new Database();
 
-            db.UpdateMemberById(member);
+            db.UpdateMemberById(id,member);
         }
 
         /// <summary>
         /// Deletes a member in the database
         /// </summary>
         /// <param name="member">Member of member</param>
-        public static void DeleteMemberById(Member member)
+        public static void DeleteMemberById(ObjectId id)
         {
             Database db = new Database();
 
-            db.DeleteMemberById(member.Id);
+            db.DeleteMemberById(id);
         }
 
     }

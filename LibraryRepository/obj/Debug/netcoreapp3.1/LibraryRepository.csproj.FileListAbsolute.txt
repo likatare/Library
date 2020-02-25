@@ -5,3 +5,4 @@ C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryReposito
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\bin\Debug\netcoreapp3.1\LibraryRepository.pdb
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.1\LibraryRepository.dll
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.1\LibraryRepository.pdb
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryRepository\obj\Debug\netcoreapp3.1\LibraryRepository.csprojAssemblyReference.cache

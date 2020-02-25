@@ -36,6 +36,7 @@ namespace LibraryRepository
             collection.InsertOne(book);
         }
 
+
         /// <summary>
         /// Saves movie to the database
         /// </summary>
@@ -161,13 +162,24 @@ namespace LibraryRepository
         }
 
         /// <summary>
+        /// Gets a member by id. 
+        /// </summary>
+        /// <param name="id">id of a member</param>
+        /// <returns>A member</returns>
+        internal Member GetMemberById(ObjectId id)
+        {
+            var collection = _database.GetCollection<Member>(MEMBERS_COLLECTION);
+            return collection.Find(m => m.Id == id).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Update member to the database
         /// </summary>
         /// <param name="id">member id</param>
         /// <param name="memberName">member name</param>
         /// <param name="age">member age</param>
         /// <param name="address">member address</param>
-        internal void UpdateMemberById(Member member)
+        internal void UpdateMemberById(ObjectId id,Member member)
         {
             var collection = _database.GetCollection<Member>(MEMBERS_COLLECTION);
             UpdateDefinition<Member> update = Builders<Member>.Update
@@ -175,7 +187,7 @@ namespace LibraryRepository
                 .Set(m => m.Age, member.Age)
                 .Set(m => m.Address, member.Address);
 
-            collection.UpdateOne(m => m.Id == member.Id, update);
+            collection.UpdateOne(m => m.Id == id, update);
 
         }
 

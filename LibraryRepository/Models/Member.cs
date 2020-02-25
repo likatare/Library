@@ -12,6 +12,11 @@ namespace LibraryRepository.Models
         public int Age { get; set; }
         public string Address { get; set; }
 
+        public Member()
+        {
+
+        }
+
         public Member(string name, int age, string address)
         {
             Name = name;

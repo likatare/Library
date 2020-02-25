@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryRepository", "Librar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserOfLibrary", "UserOfLibrary\UserOfLibrary.csproj", "{9E623210-B82F-4B65-8AF2-DA5BA36F5157}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryTests", "LibraryTests\LibraryTests.csproj", "{3B5AF142-FFEC-4365-9F83-4BF21277B437}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryTests", "LibraryTests\LibraryTests.csproj", "{3B5AF142-FFEC-4365-9F83-4BF21277B437}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryWebbApp", "LibraryWebbApp\LibraryWebbApp.csproj", "{07D0544F-4B8D-498F-ADA2-F03001971A5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3B5AF142-FFEC-4365-9F83-4BF21277B437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B5AF142-FFEC-4365-9F83-4BF21277B437}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B5AF142-FFEC-4365-9F83-4BF21277B437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D0544F-4B8D-498F-ADA2-F03001971A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D0544F-4B8D-498F-ADA2-F03001971A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D0544F-4B8D-498F-ADA2-F03001971A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D0544F-4B8D-498F-ADA2-F03001971A5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
