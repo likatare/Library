@@ -10,6 +10,10 @@ namespace LibraryRepository.Models
         public string Genre { get; set; }
         public string Type { get; set; }
 
+        public Movie()
+        {
+
+        }
 
         public Movie(string title, string language, int yearOfPublication, int copies, string genre, string type) : base(title, language, yearOfPublication,copies)
         {

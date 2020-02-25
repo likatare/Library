@@ -15,6 +15,11 @@ namespace LibraryRepository.Models
         public int Copies { get; set; }
 
 
+        public Item()
+        {
+
+        }
+
         public Item(string title, string language, int yearOfPublication, int copies)
         {
             Title = title;

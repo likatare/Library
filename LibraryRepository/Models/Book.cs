@@ -9,6 +9,10 @@ namespace LibraryRepository.Models
         public int Pages { get; set; }
         public string Author { get; set; }
 
+        public Book()
+        {
+
+        }
 
         public Book(string title, string language, int yearOfPublication,int copies ,int pages, string author) : base(title, language, yearOfPublication,copies)
         {
