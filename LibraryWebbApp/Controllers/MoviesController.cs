@@ -117,7 +117,12 @@ namespace LibraryWebbApp.Controllers
             return View(movie);
         }
 
-        // POST: Movies/Delete/5
+        /// <summary>
+        /// Deletes a movie from the database.
+        /// </summary>
+        /// <param name="id">id of the movie</param>
+        /// <param name="collection"></param>
+        /// <returns>View</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(string id, IFormCollection collection)
