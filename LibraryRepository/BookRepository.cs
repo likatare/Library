@@ -2,6 +2,7 @@
 using LibraryRepository.Models;
 using System.Collections.Generic;
 using System.Text;
+using MongoDB.Bson;
 
 namespace LibraryRepository
 {
@@ -26,29 +27,41 @@ namespace LibraryRepository
         {
             Database db = new Database();
 
-           return db.GetBooks();
+            return db.GetBooks();
+        }
+
+        /// <summary>
+        /// Gets a book by id
+        /// </summary>
+        /// <param name="bookId">id of the book</param>
+        /// <returns>A book</returns>
+        public static Book GetBookById(ObjectId bookId)
+        {
+            Database db = new Database();
+            return db.GetBookById(bookId);
+
         }
 
         /// <summary>
         /// Updates a book to the database
         /// </summary>
         /// <param name="book">Book of book</param>
-        public static void UpdateBookById(Book book)
+        public static void UpdateBookById(ObjectId id,Book book)
         {
             Database db = new Database();
 
-            db.UpdateBookById(book);
+            db.UpdateBookById(id,book);
         }
 
         /// <summary>
-        /// Deletes a book to the database
+        /// Deletes a book in the database
         /// </summary>
         /// <param name="book">Book of book</param>
-        public static void DeleteBookById(Book book)
+        public static void DeleteBookById(ObjectId id)
         {
             Database db = new Database();
 
-            db.DeleteBookById(book.Id);
+            db.DeleteBookById(id);
         }
 
     }

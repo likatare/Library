@@ -36,6 +36,13 @@ namespace LibraryRepository
             collection.InsertOne(book);
         }
 
+        internal Movie GetMovieById(ObjectId id)
+        {
+            var collection = _database.GetCollection<Movie>(Movies_COLLECTION);
+            return collection.Find(m => m.Id == id).FirstOrDefault();
+        }
+
+
 
         /// <summary>
         /// Saves movie to the database
@@ -60,6 +67,13 @@ namespace LibraryRepository
             return findresult.ToList();
         }
 
+
+        internal Book GetBookById(ObjectId id)
+        {
+            var collection = _database.GetCollection<Book>(BOOKS_COLLECTION);
+            return collection.Find(b => b.Id == id).FirstOrDefault();
+        }
+
         /// <summary>
         /// Gets all the movies from database.
         /// </summary>
@@ -81,7 +95,7 @@ namespace LibraryRepository
         /// <param name="yearOfPublication">book year of publication</param>
         /// <param name="pages">book pages</param>
         /// <param name="author">book author</param>
-        internal void UpdateBookById(Book booksIndex)
+        internal void UpdateBookById(ObjectId id,Book booksIndex)
         {
             var collection = _database.GetCollection<Book>(BOOKS_COLLECTION);
 
@@ -93,7 +107,7 @@ namespace LibraryRepository
                 .Set(b => b.Author, booksIndex.Author)
                 .Set(b => b.Copies, booksIndex.Copies);
 
-            collection.UpdateOne(b => b.Id == booksIndex.Id, update);
+            collection.UpdateOne(b => b.Id == id, update);
         }
 
         /// <summary>
@@ -105,7 +119,7 @@ namespace LibraryRepository
         /// <param name="yearOfPublication">movie year of publication </param>
         /// <param name="genre">movie genre</param>
         /// <param name="type">movie type</param>
-        internal void UpdateMovieById(Movie moviesIndex)
+        internal void UpdateMovieById(ObjectId id,Movie moviesIndex)
         {
             var collection = _database.GetCollection<Movie>(Movies_COLLECTION);
 
@@ -117,7 +131,7 @@ namespace LibraryRepository
                 .Set(m => m.Type, moviesIndex.Type)
                 .Set(m => m.Copies, moviesIndex.Copies);
 
-            collection.UpdateOne(m => m.Id == moviesIndex.Id, update);
+            collection.UpdateOne(m => m.Id == id, update);
         }
 
         /// <summary>

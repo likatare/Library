@@ -1,4 +1,5 @@
 ﻿using LibraryRepository.Models;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,26 +30,32 @@ namespace LibraryRepository
             return db.GetMovies();
         }
 
+        public static Movie GetMovieById(ObjectId movieId)
+        {
+            Database db = new Database();
+            return db.GetMovieById(movieId);
+        }
+
         /// <summary>
         /// Updates a movie in the database
         /// </summary>
         /// <param name="movie">Movie of movie</param>
-        public static void UpdateMovieById(Movie movie)
+        public static void UpdateMovieById(ObjectId movieId,Movie movie)
         {
             Database db = new Database();
 
-            db.UpdateMovieById(movie);
+            db.UpdateMovieById(movieId,movie);
         }
 
         /// <summary>
         /// Deletes a movie in the database
         /// </summary>
         /// <param name="movie">Movie of movie</param>
-        public static void DeleteMovieById(Movie movie)
+        public static void DeleteMovieById(ObjectId movieId)
         {
             Database db = new Database();
 
-            db.DeleteMovieById(movie.Id);
+            db.DeleteMovieById(movieId);
         }
     }
 }
