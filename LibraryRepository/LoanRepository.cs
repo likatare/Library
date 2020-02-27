@@ -1,4 +1,5 @@
 ﻿using LibraryRepository.Models;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,19 @@ namespace LibraryRepository
             return db.GetLoans();
         }
 
+        public static Loan GetLoanById(ObjectId loanId)
+        {
+            Database db = new Database();
+
+            return db.GetLoanById(loanId);
+        }
+
+        public static List<Loan> GetLoanByMemberById(ObjectId memberId)
+        {
+            Database db = new Database();
+            return db.GetLoanByMemberById(memberId);
+        }
+
         /// <summary>
         /// Create a loan on a book in the database
         /// </summary>
@@ -30,6 +44,22 @@ namespace LibraryRepository
             Database db = new Database();
 
             db.LoanBook(loanBook, memberToLoan, startDate, endDate);
+        }
+
+        public static List<Loan> GetAllLoanedBook(Book book)
+        {
+            Database db = new Database();
+            List<Loan> bookLoanList = db.GetAllLoanedBook(book);
+
+            return bookLoanList;
+        }
+
+        public static List<Loan> GetAllLoanedMovie(Movie movie)
+        {
+            Database db = new Database();
+            List<Loan> bookLoanList = db.GetAllLoanedMovie(movie);
+
+            return bookLoanList;
         }
 
         /// <summary>
@@ -72,6 +102,7 @@ namespace LibraryRepository
             db.UpdateMovieLoanById(loanMovie, updateLoan.Id, startDate, endDate);
         }
 
+
         /// <summary>
         /// Deletes a bookloan in the database
         /// </summary>
@@ -91,5 +122,29 @@ namespace LibraryRepository
             Database db = new Database();
             db.DeleteMovieLoanById(loan.Id);
         }
+
+
+        public static bool IsStartDateCorrect(DateTime startDate)
+        {
+            int startDateResultat = DateTime.Compare(DateTime.Now.Date, startDate);
+
+            if (startDateResultat <= 0)//checks if date is in right format and start date is not before today's date
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool IsEndDateCorrect(DateTime endDate, DateTime startDate)
+        {
+            int endDateResultat = DateTime.Compare(endDate, startDate);//Checks to not enter an end date before start date
+
+            if (endDateResultat > 0)//checks if date is in right format and end date is not before start date
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

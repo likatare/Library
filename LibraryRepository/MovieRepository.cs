@@ -57,5 +57,23 @@ namespace LibraryRepository
 
             db.DeleteMovieById(movieId);
         }
+
+        public static bool MovieIsFreeToLoan(Loan loan)
+        {
+            List<Loan> allSameFilmRented = LoanRepository.GetAllLoanedMovie(loan.MovieRented);
+            int rentedCopies = 0;
+            for (int i = 0; i < allSameFilmRented.Count; i++)
+            {
+                if (loan.EndDate >= allSameFilmRented[i].StartDate && loan.StartDate <= allSameFilmRented[i].EndDate)
+                {
+                    rentedCopies++;
+                }
+            }
+            if (rentedCopies >= loan.MovieRented.Copies)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

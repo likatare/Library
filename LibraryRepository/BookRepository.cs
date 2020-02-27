@@ -46,11 +46,11 @@ namespace LibraryRepository
         /// Updates a book to the database
         /// </summary>
         /// <param name="book">Book of book</param>
-        public static void UpdateBookById(ObjectId id,Book book)
+        public static void UpdateBookById(ObjectId id, Book book)
         {
             Database db = new Database();
 
-            db.UpdateBookById(id,book);
+            db.UpdateBookById(id, book);
         }
 
         /// <summary>
@@ -62,6 +62,27 @@ namespace LibraryRepository
             Database db = new Database();
 
             db.DeleteBookById(id);
+        }
+
+        public static bool BookIsFreeToLoan(Loan loan)
+        {
+            List<Loan> allSameBookRented = LoanRepository.GetAllLoanedBook(loan.BookRented);
+            int rentedCopies = 0;
+
+            foreach (var loanedBook in allSameBookRented)
+            {
+                if (loan.EndDate >= loanedBook.StartDate && loan.StartDate <= loanedBook.EndDate)
+                {
+                    rentedCopies++;
+                }
+            }
+
+
+            if (rentedCopies >= loan.BookRented.Copies)
+            {
+                return false;
+            }
+            return true;
         }
 
     }

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<LibraryRepository.Models.Loan>
+
+@{
+    ViewData["Title"] = "MemberLoans";
+}
+
+@if (Model.ToList().Count != 0)
+{
+    <h1>
+        @Model.ToList()[0].MemberRenting.Name's Rents
+    </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Loan Item
+                </th>
+                <th>
+                    Loan Date
+                </th>
+                <th>
+                    Return Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (item.BookRented != null)
+                    {
+                        <td>
+                            [Book] @Html.DisplayFor(modelItem => item.BookRented.Title)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            [Film] @Html.DisplayFor(modelItem => item.MovieRented.Title)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @Html.ActionLink("Loan a new Book", "RentBook", "Loans", new { id = Model.ToList()[0].MemberRenting.Id }) |
+        @Html.ActionLink("Loan a new Film", "RentFilm", "Loans", new { id = Model.ToList()[0].MemberRenting.Id })
+    </div>
+    <div style="margin-top:5%">
+        @Html.ActionLink("Go back to Member list", "Index", "Members")
+    </div>
+}
+else
+{
+    <h1>
+        This member has no Loans
+    </h1>
+    <div style="margin-top:5%">
+        @Html.ActionLink("Go back to Member list", "Index", "Members")
+    </div>
+}

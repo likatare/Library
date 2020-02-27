@@ -1,0 +1,56 @@
+﻿@model LibraryRepository.Models.Loan
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Loan Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Member Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MemberRenting.Name)
+        </dd>
+        @if (Model.BookRented != null)
+        {
+            <dt class="col-sm-2">
+                Book Title
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BookRented.Title)
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-2">
+                Movie Title
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MovieRented.Title)
+            </dd>
+        }
+        <dt class="col-sm-2">
+           
+         Loan @Html.DisplayNameFor(model => model.StartDate.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.StartDate))
+        </dd>
+        <dt class="col-sm-2">
+          Loan @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", Model.EndDate))
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>
+</div>

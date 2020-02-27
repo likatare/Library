@@ -130,3 +130,11 @@ C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Edit.cshtml.g.cs
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Delete.cshtml.g.cs
 C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\Index.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\Details.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\MemberLoans.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\BookLoans.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\MovieLoans.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\LoanBook.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\Create.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\Delete.cshtml.g.cs
+C:\Users\toffa\Documents\PROGRAMMERING .NET FÖRDJUPNING\Library\LibraryWebbApp\obj\Debug\netcoreapp3.1\Razor\Views\Loans\Edit.cshtml.g.cs

@@ -23,6 +23,18 @@ namespace LibraryRepository
             _database = dbclient.GetDatabase("library");
         }
 
+        internal Loan GetLoanById(ObjectId loanId)
+        {
+            var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
+            return collection.Find(l => l.Id == loanId).FirstOrDefault();
+        }
+
+        internal List<Loan> GetLoanByMemberById(ObjectId id)
+        {
+            var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
+            return collection.Find(l => l.MemberRenting.Id == id).ToList();
+        }
+
 
         /// <summary>
         /// Saves book to the database
@@ -40,6 +52,18 @@ namespace LibraryRepository
         {
             var collection = _database.GetCollection<Movie>(Movies_COLLECTION);
             return collection.Find(m => m.Id == id).FirstOrDefault();
+        }
+
+        internal List<Loan> GetAllLoanedBook(Book book)
+        {
+            var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
+            return collection.Find(l => l.BookRented.Id == book.Id).ToList();
+        }
+
+        internal List<Loan> GetAllLoanedMovie(Movie movie)
+        {
+            var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
+            return collection.Find(l => l.MovieRented.Id == movie.Id).ToList();
         }
 
 
@@ -222,7 +246,7 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanBook(Book rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
+        public void LoanBook(Book rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);
@@ -245,7 +269,7 @@ namespace LibraryRepository
         /// <param name="memberId">Member of the loan</param>
         /// <param name="startDate">Startdate of the loan</param>
         /// <param name="endDate">Enddate of the loan</param>
-        internal void LoanMovie(Movie rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
+        public void LoanMovie(Movie rentedBook, Member memberRenting, DateTime startDate, DateTime endDate)
         {
             Loan loan = new Loan();
             var collection = _database.GetCollection<Loan>(LOANS_COLLECTION);

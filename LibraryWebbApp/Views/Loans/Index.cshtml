@@ -16,13 +16,13 @@
                 Member
             </th>
             <th>
-                Rented Item
+                Loaned Item
             </th>
             <th>
-                Rent Date
+                Loan Date
             </th>
             <th>
-                Return Date
+               Loan End Date
             </th>
             <th></th>
         </tr>
@@ -37,21 +37,21 @@
                 @if (item.BookRented != null)
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.BookRented.Title)
+                     [Book:] @Html.DisplayFor(modelItem => item.BookRented.Title)
                     </td>
                 }
                 else
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.MovieRented.Title)
+                      [Movie:] @Html.DisplayFor(modelItem => item.MovieRented.Title)
                     </td>
                 }
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
+            <td>
+                @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.StartDate))
+            </td>
+            <td>
+                @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.EndDate))
+            </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |

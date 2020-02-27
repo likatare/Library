@@ -1,0 +1,70 @@
+﻿@model LibraryWebbApp.Models.ListModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Loan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MemberList" class="control-label"></label>
+                <select name="memberId">
+                    @foreach (var member in Model.MemberList)
+                    {
+                        <option value="@member.Id">@member.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookList" class="control-label"></label>
+                <select name="bookId">
+                    <option value="Empty"></option>
+                    @foreach (var book in Model.BookList)
+                    {
+
+                        <option value="@book.Id">@book.Title</option>
+
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MovieList" class="control-label"></label>
+                <select name="movieId">
+                    <option value="Empty"></option>
+                    @foreach (var movie in Model.MovieList)
+                    {
+                        <option value="@movie.Id">@movie.Title</option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Loan.StartDate" class="control-label"></label>
+                <input name="startDate" asp-for="Loan.StartDate" class="form-control" />
+                <span asp-validation-for="Loan.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.EndDate" class="control-label"></label>
+                <input name="endDate" asp-for="Loan.EndDate" class="form-control" />
+                <span asp-validation-for="Loan.EndDate" class="text-danger"></span>
+            </div>
+            <h3 style="color: rebeccapurple" >@Model.ErrorMessage</h3>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

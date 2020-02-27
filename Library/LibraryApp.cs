@@ -303,7 +303,7 @@ namespace Library
             bookToUpdate.Copies = copies;
 
 
-            BookRepository.UpdateBookById(bookToUpdate);
+            BookRepository.UpdateBookById(bookToUpdate.Id,bookToUpdate);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Library
             int.TryParse(input, out int copies);
             movieToUpdate.Copies = copies;
 
-            MovieRepository.UpdateMovieById(movieToUpdate);
+            MovieRepository.UpdateMovieById(movieToUpdate.Id,movieToUpdate);
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace Library
             Book deleteBook = books[selectedNumber - 1];
 
 
-            BookRepository.DeleteBookById(deleteBook);
+            BookRepository.DeleteBookById(deleteBook.Id);
 
         }
 
@@ -506,7 +506,7 @@ namespace Library
             Movie deleteMovie = movies[selectedNumber - 1];
 
 
-            MovieRepository.DeleteMovieById(deleteMovie);
+            MovieRepository.DeleteMovieById(deleteMovie.Id);
 
         }
 
@@ -573,7 +573,7 @@ namespace Library
             memberToUpdate.Address = Console.ReadLine();
 
 
-            MemberRepository.UpdateMemberById(memberToUpdate);
+            MemberRepository.UpdateMemberById(memberToUpdate.Id,memberToUpdate);
         }
 
         /// <summary>
@@ -608,7 +608,7 @@ namespace Library
 
             Member memberToDelete = SelectMember();
 
-            MemberRepository.DeleteMemberById(memberToDelete);
+            MemberRepository.DeleteMemberById(memberToDelete.Id);
 
         }
 
@@ -701,7 +701,7 @@ namespace Library
 
             if (loanAccepted == true)
             {
-                BookRepository.UpdateBookById(loanBook);
+                BookRepository.UpdateBookById(loanBook.Id,loanBook);
                 LoanRepository.LoanBook(loanBook, memberToLoan, startDate, endDate);
             }
 
@@ -853,7 +853,7 @@ namespace Library
             }
             if (loanAccepted == true)
             {
-                MovieRepository.UpdateMovieById(loanMovie);
+                MovieRepository.UpdateMovieById(loanMovie.Id,loanMovie);
                 LoanRepository.LoanMovie(loanMovie, memberToLoan, startDate, endDate);
             }
 
